@@ -1,4 +1,4 @@
-from editorial import Editorial
+from clases_libro.editorial import Editorial
 
 class Edicion:
     def __init__(self, numero: int, anno: int, isbn: str, idioma: str, formato: str, editorial: Editorial):

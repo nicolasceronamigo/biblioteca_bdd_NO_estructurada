@@ -1,4 +1,4 @@
-from usuario import Usuario 
+from clases_prestamo.usuario import Usuario 
 
 class Prestamo:
     def __init__(self, id_prestamo: str, usuario: Usuario, fecha_prestamo: str, fecha_limite: str, fecha_devolucion: str, estado: str) -> None:

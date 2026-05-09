@@ -1,4 +1,4 @@
-from libro import Libro
+from clases_libro.libro import Libro
 from clases_prestamo.prestamo import Prestamo
 
 class CopiaLibro:
