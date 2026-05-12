@@ -2,10 +2,10 @@ from clases_libro.libro import Libro
 from clases_prestamo.prestamo import Prestamo
 
 class CopiaLibro:
-    def __init__(self, id_copia: str, fecha_ingreso: str, estado: str, valoracion: float, libro: Libro, historial_prestamos: list[Prestamo]):
-        self.__id_copia = id_copia
-        self.__fecha_ingreso = fecha_ingreso
-        self.__estado = estado
-        self.__valoracion = valoracion
-        self.__libro = libro
-        self.__historial_prestamos = historial_prestamos
+    def __init__(self, codigo_copia: int, fecha_ingreso: str, valoracion: float, estado: str, libro: Libro, prestamos: list[Prestamo]):
+        self.codigo_copia = codigo_copia
+        self.fecha_ingreso = fecha_ingreso
+        self.valoracion = valoracion
+        self.estado = estado
+        self.libro = libro
+        self.prestamos = prestamos
