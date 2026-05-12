@@ -26,15 +26,15 @@ class MenuRegistrar(Menu):
         try:
             valoracion = float(input("Ingrese la valoración de la copia: "))
         except:
-            print("Error. La valoración debe ser un número decimal")
+            print("Error. La valoración debe ser un número decimal. \n")
             return
-        estado = "Disponible"
+        #estado = input("Ingrese el estado de la copia: ")
         titulo = input("Ingrese el título del libro: ")
         categoria = input("Ingrese la categoría del libro: ")
         try:
             anno_publicacion = int(input("Ingrese el año de publicación del libro: "))
         except:
-            print("Error, el año de publicación debe ser un número entero")
+            print("Error, el año de publicación debe ser un número entero. \n")
             return
         nombre_autor = input("Ingrese el nombre del autor del libro: ")
         nacionalidad_autor = input("Ingrese la nacionalidad del autor: ")
@@ -44,12 +44,12 @@ class MenuRegistrar(Menu):
         try:
             numero_edicion = int(input("Ingrese el número de la edición: "))
         except:
-            print("Error, el número de la edición debe ser un número entero")
+            print("Error, el número de la edición debe ser un número entero. \n")
             return
         try:
             anio_edicion = int(input("Ingrese el año de la edición: "))
         except:
-            print("Error, el año de la edición debe ser un número entero")
+            print("Error, el año de la edición debe ser un número entero. \n")
             return
         formato = input("Ingrese formato de la edición: ")
         idioma = input("Ingrese el idioma de la edición: ")
@@ -60,7 +60,7 @@ class MenuRegistrar(Menu):
         try:
             num_prestamos = int(input("Ingrese el número de préstamos: "))
         except:
-            print("Error, el número de préstamos debe ser un número entero")
+            print("Error, el número de préstamos debe ser un número entero. \n")
             return
         prestamos = []
         for n in range(num_prestamos):
@@ -71,18 +71,26 @@ class MenuRegistrar(Menu):
             try:
                 date_fecha_prestamo = datetime.strptime(fecha_prestamo, "%Y-%m-%d")
             except:
-                print("Error. Formato incorrecto de fecha.")
+                print("Error. Formato incorrecto de fecha.\n")
                 return 
             fecha_limite = date_fecha_prestamo + timedelta(days = 7)
             fecha_devolucion = input("Ingrese la fecha de devolucion en formato YYYY-MM-DD: ")
             try:
                 date_fecha_devolucion = datetime.strptime(fecha_devolucion, "%Y-%m-%d")
             except:
-                print("Error. Formato incorrecto de fecha.")
+                print("Error. Formato incorrecto de fecha.\n")
                 return
-            estado_prestamo = input("Ingrese el estado de la devolución: ")
+            #estado_prestamo = input("Ingrese el estado de la devolución: ")
+            if date_fecha_devolucion <= fecha_limite:
+                estado_prestamo = "Devuelto"
+            elif date_fecha_devolucion > fecha_limite:
+                estado_prestamo = "Atrasado"
+            elif date_fecha_devolucion > datetime.now():
+                print("Error. La fecha de devolución tiene que ser anterior a la fecha actual.\n")
+                return
             prestamo = Prestamo(usuario, date_fecha_prestamo, fecha_limite, date_fecha_devolucion, estado_prestamo)
             prestamos.append(prestamo)
+        estado = "Disponible"
         copia_libro = CopiaLibro(codigo_copia, fecha_ingreso, valoracion, estado, libro, prestamos)
         return to_dicc(copia_libro)
     
@@ -90,13 +98,15 @@ class MenuRegistrar(Menu):
         copia = self.crear_copia()
         if copia:
             self.coleccion.insert_one(copia)
-            print("Copia registrada correctamente")
+            print("Copia registrada correctamente. \n")
+        else:
+            print("Error al crear la copia. No se creo la copia.\n")
 
     def crear_copias(self):
         try:
             num_copias = int(input("Ingrese la cantidad de copias a registrar: "))
         except:
-            print("Error. Solo puede ingresar un numero entero")
+            print("Error. Solo puede ingresar un numero entero.\n")
             return
         arr_copias = []
         ultimo_documento = self.coleccion.find_one(sort = [("codigo_copia", DESCENDING)])
@@ -112,4 +122,6 @@ class MenuRegistrar(Menu):
         copias = self.crear_copias()
         if copias:
             self.coleccion.insert_many(copias)
-            print("Copias registradas correctamente")
+            print("Copias registradas correctamente.\n")
+        else:
+            print("Error al crear las copias. No se creo ninguna copia.\n")

@@ -7,4 +7,7 @@ from pprint import pprint
 class MenuListar(Menu):
     def mostrar_copias(self):
         documentos = list(self.coleccion.find({}))
-        mostrar_elementos(documentos)           
+        if documentos:
+            mostrar_elementos(documentos)
+        else:
+            print("No hay copias registradas.")           

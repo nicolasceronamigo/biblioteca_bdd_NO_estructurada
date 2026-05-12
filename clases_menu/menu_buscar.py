@@ -13,7 +13,7 @@ class MenuBuscar(Menu):
             documentos = list(self.coleccion.find({"valoracion": {"$gte": valoracion}}, {"_id": 0, "codigo_copia": 1, "libro.titulo": 1, "valoracion": 1}))
             mostrar_elementos(documentos)
         except:
-            print("Error. La valoración tiene que ser un número decimal.")
+            print("Error. La valoración tiene que ser un número decimal.\n")
 
     def buscar_antes_anno(self):
         try:
@@ -21,7 +21,7 @@ class MenuBuscar(Menu):
             documentos = list(self.coleccion.find({"libro.anio_publicacion": {"$lte": anno}}, {"_id": 0, "codigo_copia": 1, "libro.titulo": 1, "libro.anio_publicacion": 1}))
             mostrar_elementos(documentos)
         except:
-            print("Error. El año tiene que ser un número entero.")
+            print("Error. El año tiene que ser un número entero.\n")
     
     def buscar_coincidencia_nombre_copia(self):
         nombre = input("Ingrese la palabra clave para el titulo del libro: ")
@@ -37,7 +37,7 @@ class MenuBuscar(Menu):
             documentos = list(self.coleccion.find({"prestamos": {"$elemMatch": {"fecha_prestamo": {"$gte": date_fecha_inicial, "$lt": date_fecha_final}}}}, {"_id": 0, "codigo_copia": 1, "libro.titulo": 1, "prestamos.fecha_prestamo": 1}))
             mostrar_elementos(documentos)
         except:
-            print("Error. Formato incorrecto de fecha.")
+            print("Error. Formato incorrecto de fecha.\n")
     
     def buscar_copias_usuario(self):
         nombre_usuario = input("Ingrese el nombre del usuario: ")

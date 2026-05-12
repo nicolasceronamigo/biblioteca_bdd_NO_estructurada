@@ -21,22 +21,4 @@ def mostrar_elementos(lista):
             print("----------------------------------------------------------------------------------------")
             pprint(elemento, sort_dicts = False)
     else:
-        print("No se encontraron elementos")
-
-'''
-def mostrar_objeto(objeto):
-        resultado = ""
-        if type(objeto) == dict:
-            resultado += "{\n"
-            for k, v in objeto.items():
-                resultado += f"{k}: {mostrar_objeto(v)}"
-            resultado += "}\n"
-        elif type(objeto) == list:
-            resultado += "[\n"
-            for elem in objeto:
-                resultado += f"{mostrar_objeto(elem)}"
-            resultado += "]\n"
-        else:
-            resultado += str(objeto) + ", \n"
-        return resultado
-'''
+        print("No se encontraron elementos.\n")
