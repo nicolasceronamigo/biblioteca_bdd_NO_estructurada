@@ -10,6 +10,7 @@ class MenuEditar(Menu):
             codigo_copia = int(input("Ingrese el código de la copia: "))
         except:
             print("Error. El codigo de la copia es un número entero.")
+            return
         documento = self.coleccion.find_one({"codigo_copia": codigo_copia})
         if documento:
             if documento["estado"] != "Disponible":
@@ -34,6 +35,7 @@ class MenuEditar(Menu):
             codigo_copia = int(input("Ingrese el código de la copia: "))
         except:
             print("Error. El codigo de la copia es un número entero.")
+            return
         documento = self.coleccion.find_one({"codigo_copia": codigo_copia})
         if documento:
             if documento["estado"] == "Disponible":
@@ -60,6 +62,7 @@ class MenuEditar(Menu):
             codigo_copia = int(input("Ingrese el código de la copia: "))
         except:
             print("Error. El codigo de la copia es un número entero.")
+            return
         documento = self.coleccion.find_one({"codigo_copia": codigo_copia})
         print("Documento a cambiar: ")
         pprint(documento)

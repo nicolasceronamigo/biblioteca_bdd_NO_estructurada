@@ -50,6 +50,8 @@ menu_editar.agregar_opcion(1, "Prestar copia", menu_editar.prestar_copia)
 menu_editar.agregar_opcion(2, "Devolver copia", menu_editar.devolver_copia)
 menu_editar.agregar_opcion(3, "Cambiar estado", menu_editar.cambiar_estado)
 
+menu_eliminar.agregar_opcion(0, "Salir", menu_eliminar.salir)
+menu_eliminar.agregar_opcion(1, "Eliminar copia", menu_eliminar.eliminar_copia)
 
 #doc = coleccion.find_one({"codigo_copia": 0}, {"_id": -1, "codigo_copia": 1, "libro.titulo": 1, "valoracion": 1, "estado": 1})
 #pprint(doc)
