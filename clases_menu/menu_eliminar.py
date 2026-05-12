@@ -13,9 +13,10 @@ class MenuEliminar(Menu):
         if copia_eliminar:
             print("Copia a eliminar: ")
             pprint(copia_eliminar)
-            opcion = input("Confirme si desea eliminar la copia [y/n]")
+            opcion = input("Confirme si desea eliminar la copia [y/n]: ")
             if opcion == "y":
                 self.coleccion.delete_one({"codigo_copia": codigo_copia})
+                print("Copia borrada con éxito")
             elif opcion == "n":
                 print("Operación abortada.")
             else:

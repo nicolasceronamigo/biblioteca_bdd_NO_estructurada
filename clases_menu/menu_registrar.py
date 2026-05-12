@@ -14,13 +14,21 @@ from herramientas.herramientas import to_dicc
 
 
 class MenuRegistrar(Menu):
-    def crear_copia(self):
-        ultimo_codigo_copia = self.coleccion.find_one(sort = [("codigo_copia", DESCENDING)])["codigo_copia"]
-        codigo_copia = ultimo_codigo_copia + 1
+    def crear_copia(self, cod = 0):
+        ultimo_documento = self.coleccion.find_one(sort = [("codigo_copia", DESCENDING)])
+        if ultimo_documento and cod == 0:
+            codigo_copia = ultimo_documento["codigo_copia"] + 1
+        elif cod != 0:
+            codigo_copia = cod
+        else:
+            codigo_copia = 1
         fecha_ingreso = datetime.now()
-        valoracion = 0
+        try:
+            valoracion = float(input("Ingrese la valoración de la copia: "))
+        except:
+            print("Error. La valoración debe ser un número decimal")
+            return
         estado = "Disponible"
-
         titulo = input("Ingrese el título del libro: ")
         categoria = input("Ingrese la categoría del libro: ")
         try:
@@ -72,15 +80,17 @@ class MenuRegistrar(Menu):
             except:
                 print("Error. Formato incorrecto de fecha.")
                 return
-            estado = input("Ingrese el estado de la devolución: ")
-            prestamo = Prestamo(usuario, date_fecha_prestamo, fecha_limite, date_fecha_devolucion, estado)
+            estado_prestamo = input("Ingrese el estado de la devolución: ")
+            prestamo = Prestamo(usuario, date_fecha_prestamo, fecha_limite, date_fecha_devolucion, estado_prestamo)
             prestamos.append(prestamo)
         copia_libro = CopiaLibro(codigo_copia, fecha_ingreso, valoracion, estado, libro, prestamos)
         return to_dicc(copia_libro)
     
     def registrar_copia(self):
         copia = self.crear_copia()
-        self.coleccion.insert_one(copia)
+        if copia:
+            self.coleccion.insert_one(copia)
+            print("Copia registrada correctamente")
 
     def crear_copias(self):
         try:
@@ -89,10 +99,17 @@ class MenuRegistrar(Menu):
             print("Error. Solo puede ingresar un numero entero")
             return
         arr_copias = []
+        ultimo_documento = self.coleccion.find_one(sort = [("codigo_copia", DESCENDING)])
+        ultimo_codigo = ultimo_documento["codigo_copia"]
         for num in range(num_copias):
-            arr_copias.append(self.crear_copia())
+            ultimo_codigo += 1
+            copia = self.crear_copia(ultimo_codigo)
+            if copia:
+                arr_copias.append(copia)
         return arr_copias
 
     def registrar_copias(self):
         copias = self.crear_copias()
-        self.coleccion.insert_many(copias)
+        if copias:
+            self.coleccion.insert_many(copias)
+            print("Copias registradas correctamente")
